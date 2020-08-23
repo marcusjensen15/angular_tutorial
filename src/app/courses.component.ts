@@ -1,3 +1,4 @@
+import { CoursesService } from './courses.service';
 import { Component } from '@angular/core';
 
 //selector:  <courses>. how it is referred to outside of class definition
@@ -9,7 +10,10 @@ import { Component } from '@angular/core';
 // you can use bacticks for string interpolation 
 // every time you are using a directive that modifies the structure of the DOM, prefix with a *
 // ngFor is a for loop iterating over an array of courses. each cell in the array is called a course
-//
+// you can define services in this case with a let variable, or you can 
+//make it as a paramter within your constructor. by doing this there is a local copy of 
+// CoursesServices instantied when a new CoursesComponent is. This way if CoursesServices
+// Changes you don't need to make the change in a zillion places/ 
 
 @Component({
     selector: 'courses', 
@@ -25,7 +29,12 @@ import { Component } from '@angular/core';
 export class CoursesComponent {
 
     title = "List of Courses";
-    courses = ['course1', 'course2', 'course3']
+    courses;
+
+    constructor(service: CoursesService) {
+        // let service = new CoursesService();
+        this.courses = service.getCourses();
+    }
 
     getTitle() {
         return this.title
